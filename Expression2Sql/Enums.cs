@@ -17,12 +17,12 @@
 #endregion
 
 namespace Expression2Sql
-{    
-    public enum DatabaseType
-    {
-        SQLServer,
-        MySQL,
-        Oracle,
-        SQLite,
-    }
+{
+	public enum DatabaseType
+	{
+		SQLServer,
+		MySQL,
+		Oracle,
+		SQLite,
+	}
 }
