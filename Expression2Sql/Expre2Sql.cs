@@ -21,7 +21,7 @@ using System.Linq.Expressions;
 
 namespace Expression2Sql
 {
-	public static class Expre2Sql
+	public static class ExpressionToSql
 	{
 		public static DatabaseType DatabaseType { get; set; }
 
