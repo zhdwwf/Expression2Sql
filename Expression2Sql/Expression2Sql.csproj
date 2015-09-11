@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseExpression2Sql.cs" />
+    <Compile Include="DbSqlParser\MySQLSqlParser.cs" />
+    <Compile Include="DbSqlParser\OracleSqlParser.cs" />
+    <Compile Include="DbSqlParser\SQLiteSqlParser.cs" />
+    <Compile Include="DbSqlParser\SQLServerSqlParser.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Expression2SqlEx.cs" />
     <Compile Include="ExpressionToSql.cs" />
@@ -51,6 +55,7 @@
     <Compile Include="Expression2Sql\NewArrayExpression2Sql.cs" />
     <Compile Include="Expression2Sql\NewExpression2Sql.cs" />
     <Compile Include="Expression2Sql\UnaryExpression2Sql.cs" />
+    <Compile Include="IDbSqlParser.cs" />
     <Compile Include="IExpression2Sql.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Expression2SqlProvider.cs" />

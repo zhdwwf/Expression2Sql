@@ -52,24 +52,7 @@ namespace Expression2Sql
 
 		public StringBuilder Sql { get; set; }
 
-		public DatabaseType DatabaseType { get; set; }
-
 		public Dictionary<string, object> DbParams { get; private set; }
-
-		private string DbParamPrefix
-		{
-			get
-			{
-				switch (this.DatabaseType)
-				{
-					case DatabaseType.SQLite:
-					case DatabaseType.SQLServer: return "@";
-					case DatabaseType.MySQL: return "?";
-					case DatabaseType.Oracle: return ":";
-					default: return "";
-				}
-			}
-		}
 
 		public char this[int index]
 		{
@@ -110,7 +93,7 @@ namespace Expression2Sql
 			}
 			else
 			{
-				string name = this.DbParamPrefix + "param" + this.DbParams.Count;
+				string name = ExpressionToSql.DbSqlParser.DbParamPrefix + "param" + this.DbParams.Count;
 				this.DbParams.Add(name, parameterValue);
 				this.Sql.Append(" " + name);
 			}

@@ -17,8 +17,8 @@ namespace Expression2SqlTest
 
 
 			//通过静态属性DatabaseType或者静态方法Init均可配置数据库类型
-            ExpressionToSql.DatabaseType = DatabaseType.SQLServer;
-            ExpressionToSql.Init(DatabaseType.SQLServer);
+            ExpressionToSql.DbSqlParser = new SQLServerSqlParser();
+            ExpressionToSql.Init(new SQLServerSqlParser());
 
             Printf(
                 ExpressionToSql.Select<UserInfo>(),

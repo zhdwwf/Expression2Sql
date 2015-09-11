@@ -41,11 +41,6 @@ namespace Expression2Sql
             }
         }
 
-        public Expression2SqlCore(DatabaseType dbType)
-        {
-            this._sqlPack.DatabaseType = dbType;
-        }
-
         public void Clear()
         {
             this._sqlPack.Clear();
