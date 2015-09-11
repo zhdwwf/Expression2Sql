@@ -43,7 +43,7 @@
     <Compile Include="BaseExpression2Sql.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Expression2SqlEx.cs" />
-    <Compile Include="Expre2Sql.cs" />
+    <Compile Include="ExpressionToSql.cs" />
     <Compile Include="Expression2Sql\BinaryExpression2Sql.cs" />
     <Compile Include="Expression2Sql\ConstantExpression2Sql.cs" />
     <Compile Include="Expression2Sql\MemberExpression2Sql.cs" />
