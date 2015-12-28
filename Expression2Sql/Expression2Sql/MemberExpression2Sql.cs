@@ -25,6 +25,21 @@ namespace Expression2Sql
 {
     class MemberExpression2Sql : BaseExpression2Sql<MemberExpression>
     {
+        private static object GetValue(MemberExpression expr)
+        {
+            object value;
+            var field = expr.Member as FieldInfo;
+            if (field != null)
+            {
+                value = field.GetValue(((ConstantExpression)expr.Expression).Value);
+            }
+            else
+            {
+                value = ((PropertyInfo)expr.Member).GetValue(((ConstantExpression)expr.Expression).Value, null);
+            }
+            return value;
+        }
+
         private SqlPack AggregateFunctionParser(MemberExpression expression, SqlPack sqlPack)
         {
             string aggregateFunctionName = new StackTrace(true).GetFrame(1).GetMethod().Name.ToLower();
@@ -71,13 +86,21 @@ namespace Expression2Sql
 
         protected override SqlPack Where(MemberExpression expression, SqlPack sqlPack)
         {
-            sqlPack.SetTableAlias(expression.Member.DeclaringType.Name);
-            string tableAlias = sqlPack.GetTableAlias(expression.Member.DeclaringType.Name);
-            if (!string.IsNullOrWhiteSpace(tableAlias))
+            if (expression.Expression.NodeType == ExpressionType.Constant)
             {
-                tableAlias += ".";
+                object value = GetValue(expression);
+                sqlPack.AddDbParameter(value);
             }
-            sqlPack += " " + tableAlias + expression.Member.Name;
+            else if (expression.Expression.NodeType == ExpressionType.Parameter)
+            {
+                sqlPack.SetTableAlias(expression.Member.DeclaringType.Name);
+                string tableAlias = sqlPack.GetTableAlias(expression.Member.DeclaringType.Name);
+                if (!string.IsNullOrWhiteSpace(tableAlias))
+                {
+                    tableAlias += ".";
+                }
+                sqlPack += " " + tableAlias + expression.Member.Name;
+            }
 
             return sqlPack;
         }

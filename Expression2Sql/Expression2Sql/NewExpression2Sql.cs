@@ -23,6 +23,11 @@ namespace Expression2Sql
 {
 	class NewExpression2Sql : BaseExpression2Sql<NewExpression>
 	{
+        protected override SqlPack Where(NewExpression expression, SqlPack sqlPack)
+        {
+            return base.Where(expression, sqlPack);
+        }
+
 		protected override SqlPack Update(NewExpression expression, SqlPack sqlPack)
 		{
 			for (int i = 0; i < expression.Members.Count; i++)
