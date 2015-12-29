@@ -32,7 +32,7 @@ namespace Expression2Sql
             {"In",In}
         };
 
-		private static void In(MethodCallExpression expression, SqlPack sqlPack)
+		private static new void In(MethodCallExpression expression, SqlPack sqlPack)
 		{
 			Expression2SqlProvider.Where(expression.Arguments[0], sqlPack);
 			sqlPack += " in";

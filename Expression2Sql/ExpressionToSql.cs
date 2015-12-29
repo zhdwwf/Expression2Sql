@@ -51,7 +51,8 @@ namespace Expression2Sql
             this._sqlPack.Clear();
         }
 
-        private string SelectParser(params Type[] ary)
+
+        private ExpressionToSql<T> SelectParser(Expression expression, Expression expressionBody, params Type[] ary)
         {
             this._sqlPack.Clear();
             this._sqlPack.IsSingleTable = false;
@@ -62,168 +63,61 @@ namespace Expression2Sql
                 this._sqlPack.SetTableAlias(tableName);
             }
 
-            return "select {0}\nfrom " + typeof(T).Name + " " + this._sqlPack.GetTableAlias(typeof(T).Name);
+            string sql = "select {0}\nfrom " + typeof(T).Name + " " + this._sqlPack.GetTableAlias(typeof(T).Name);
+
+            if (expression == null)
+            {
+                this._sqlPack.Sql.AppendFormat(sql, "*");
+            }
+            else
+            {
+                Expression2SqlProvider.Select(expressionBody, this._sqlPack);
+                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
+            }
+
+            return this;
         }
         public ExpressionToSql<T> Select(Expression<Func<T, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2>(Expression<Func<T, T2, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2, T3>(Expression<Func<T, T2, T3, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2), typeof(T3));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2, T3, T4>(Expression<Func<T, T2, T3, T4, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2), typeof(T3), typeof(T4));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2, T3, T4, T5>(Expression<Func<T, T2, T3, T4, T5, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2), typeof(T3), typeof(T4), typeof(T5));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2, T3, T4, T5, T6>(Expression<Func<T, T2, T3, T4, T5, T6, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2, T3, T4, T5, T6, T7>(Expression<Func<T, T2, T3, T4, T5, T6, T7, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2, T3, T4, T5, T6, T7, T8>(Expression<Func<T, T2, T3, T4, T5, T6, T7, T8, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2, T3, T4, T5, T6, T7, T8, T9>(Expression<Func<T, T2, T3, T4, T5, T6, T7, T8, T9, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
         public ExpressionToSql<T> Select<T2, T3, T4, T5, T6, T7, T8, T9, T10>(Expression<Func<T, T2, T3, T4, T5, T6, T7, T8, T9, T10, object>> expression = null)
         {
-            string sql = SelectParser(typeof(T), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10));
-
-            if (expression == null)
-            {
-                this._sqlPack.Sql.AppendFormat(sql, "*");
-            }
-            else
-            {
-                Expression2SqlProvider.Select(expression.Body, this._sqlPack);
-                this._sqlPack.Sql.AppendFormat(sql, this._sqlPack.SelectFieldsStr);
-            }
-
-            return this;
+            return SelectParser(expression, expression == null ? null : expression.Body, typeof(T));
         }
+
 
         private ExpressionToSql<T> JoinParser<T2>(Expression<Func<T, T2, bool>> expression, string leftOrRightJoin = "")
         {

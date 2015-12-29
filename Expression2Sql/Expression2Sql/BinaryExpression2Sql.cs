@@ -72,7 +72,7 @@ namespace Expression2Sql
             }
         }
 
-        public static int GetOperatorPrecedence(Expression node)
+        private static int GetOperatorPrecedence(Expression node)
         {
             switch (node.NodeType)
             {
@@ -224,7 +224,7 @@ namespace Expression2Sql
             return (child.NodeType == ExpressionType.Constant && (parent.NodeType == ExpressionType.Negate || parent.NodeType == ExpressionType.NegateChecked)) || operatorPrecedence < operatorPrecedence2;
         }
 
-        public static bool IsNeedsParentheses(Expression parent, Expression child)
+        private static bool IsNeedsParentheses(Expression parent, Expression child)
         {
             if (child == null)
             {

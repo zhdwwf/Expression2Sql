@@ -19,12 +19,12 @@ namespace Expression2SqlTest
             Printf(
                     userInfoSql.Select().Where(u => u.Id != 1),
                     "查询单表，带where条件，实例类"
-                );
+            );
 
             Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id),
                     "查询单表单个字段，静态类"
-                );
+            );
 
 
             if (true)
@@ -46,55 +46,55 @@ namespace Expression2SqlTest
 
                 Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id).
-                                    Where(u => u.Name.Like("b")),
+                                             Where(u => u.Name.Like("b")),
                     "查询单表，带where Like条件"
                 );
 
                 Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id).
-                                    Where(u => u.Name.LikeLeft("b")),
+                                             Where(u => u.Name.LikeLeft("b")),
                     "查询单表，带where LikeLeft条件"
                 );
 
                 Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id).
-                                    Where(u => u.Name.LikeRight("b")),
+                                             Where(u => u.Name.LikeRight("b")),
                     "查询单表，带where LikeRight条件"
                 );
 
                 Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Name).
-                                    Where(u => u.Id.In(1, 2, 3)),
+                                             Where(u => u.Id.In(1, 2, 3)),
                     "查询单表，带where in条件，写法一"
                 );
 
                 int[] aryId = { 1, 2, 3 };
                 Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Name).
-                                    Where(u => u.Id.In(aryId)),
+                                             Where(u => u.Id.In(aryId)),
                     "查询单表，带where in条件，写法二"
                 );
 
                 Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Name).
-                                    Where(u => u.Name.In(new string[] { "a", "b" })),
+                                             Where(u => u.Name.In(new string[] { "a", "b" })),
                     "查询单表，带where in条件，写法三"
                 );
 
                 Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id).
-                                  Where(
-                                        u => u.Name == "b"
-                                          && u.Id > 2
-                                          && u.Name != null
-                                          && u.Id > int.MinValue
-                                          && u.Id < int.MaxValue
-                                          && u.Id.In(1, 2, 3)
-                                          && u.Name.Like("a")
-                                          && u.Name.LikeLeft("b")
-                                          && u.Name.LikeRight("c")
-                                          || u.Id == null
-                                        ),
+                                              Where(
+                                                    u => u.Name == "b"
+                                                      && u.Id > 2
+                                                      && u.Name != null
+                                                      && u.Id > int.MinValue
+                                                      && u.Id < int.MaxValue
+                                                      && u.Id.In(1, 2, 3)
+                                                      && u.Name.Like("a")
+                                                      && u.Name.LikeLeft("b")
+                                                      && u.Name.LikeRight("c")
+                                                      || u.Id == null
+                                                    ),
                     "查询单表，带多个where条件"
                 );
 
@@ -116,49 +116,49 @@ namespace Expression2SqlTest
 
                 Printf(
                      ExpressionToSqlSQLServer.Select<UserInfo, Account>((u, a) => new { u.Id, a.Name }).
-                                     InnerJoin<Account>((u, a) => u.Id == a.UserId),
+                                              InnerJoin<Account>((u, a) => u.Id == a.UserId),
                      "多表InnerJoin关联查询"
                 );
 
                 Printf(
                      ExpressionToSqlSQLServer.Select<UserInfo, Account>((u, a) => new { u.Id, a.Name }).
-                                     LeftJoin<Account>((u, a) => u.Id == a.UserId),
+                                              LeftJoin<Account>((u, a) => u.Id == a.UserId),
                      "多表LeftJoin关联查询"
                 );
 
                 Printf(
                      ExpressionToSqlSQLServer.Select<UserInfo, Account>((u, a) => new { u.Id, a.Name }).
-                                     RightJoin<Account>((u, a) => u.Id == a.UserId),
+                                              RightJoin<Account>((u, a) => u.Id == a.UserId),
                      "多表RightJoin关联查询"
                 );
 
                 Printf(
                      ExpressionToSqlSQLServer.Select<UserInfo, Account>((u, a) => new { u.Id, a.Name }).
-                                     FullJoin<Account>((u, a) => u.Id == a.UserId),
+                                              FullJoin<Account>((u, a) => u.Id == a.UserId),
                      "多表FullJoin关联查询"
                 );
 
                 Printf(
                      ExpressionToSqlSQLServer.Select<UserInfo, Account, Student, Class, City, Country>((u, a, s, d, e, f) =>
-                               new { u.Id, a.Name, StudentName = s.Name, ClassName = d.Name, e.CityName, CountryName = f.Name }).
-                               Join<Account>((u, a) => u.Id == a.UserId).
-                               LeftJoin<Account, Student>((a, s) => a.Id == s.AccountId).
-                               RightJoin<Student, Class>((s, c) => s.Id == c.UserId).
-                               InnerJoin<Class, City>((c, d) => c.CityId == d.Id).
-                               FullJoin<City, Country>((c, d) => c.CountryId == d.Id).
-                               Where(u => u.Id != null),
+                                              new { u.Id, a.Name, StudentName = s.Name, ClassName = d.Name, e.CityName, CountryName = f.Name }).
+                                              Join<Account>((u, a) => u.Id == a.UserId).
+                                              LeftJoin<Account, Student>((a, s) => a.Id == s.AccountId).
+                                              RightJoin<Student, Class>((s, c) => s.Id == c.UserId).
+                                              InnerJoin<Class, City>((c, d) => c.CityId == d.Id).
+                                              FullJoin<City, Country>((c, d) => c.CountryId == d.Id).
+                                              Where(u => u.Id != null),
                      "多表复杂关联查询"
                 );
 
                 Printf(
                      ExpressionToSqlSQLServer.Count<UserInfo>(u => u.Id).
-                                     GroupBy(u => u.Name),
+                                              GroupBy(u => u.Name),
                      "GroupBy分组查询"
                 );
 
                 Printf(
                      ExpressionToSqlSQLServer.Select<UserInfo>().
-                                     OrderBy(u => u.Id),
+                                              OrderBy(u => u.Id),
                      "OrderBy排序"
                 );
 
@@ -199,7 +199,7 @@ namespace Expression2SqlTest
 
                 Printf(
                      ExpressionToSqlSQLServer.Delete<UserInfo>().
-                                     Where(u => u.Id == null),
+                                              Where(u => u.Id == null),
                      "根据where条件删除指定表记录"
                 );
 
@@ -210,7 +210,7 @@ namespace Expression2SqlTest
 
                 Printf(
                      ExpressionToSqlSQLServer.Update<UserInfo>(() => new { Name = "", Sex = 1, Email = "123456@qq.com" }).
-                                     Where(u => u.Id == 1),
+                                              Where(u => u.Id == 1),
                      "根据where条件更新指定表记录"
                 );
             }
