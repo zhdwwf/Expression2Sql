@@ -21,55 +21,55 @@ using System.Reflection;
 
 namespace Expression2Sql
 {
-	class NewExpression2Sql : BaseExpression2Sql<NewExpression>
-	{
+    class NewExpression2Sql : BaseExpression2Sql<NewExpression>
+    {
         protected override SqlBuilder Where(NewExpression expression, SqlBuilder sqlBuilder)
         {
             return base.Where(expression, sqlBuilder);
         }
 
-		protected override SqlBuilder Update(NewExpression expression, SqlBuilder sqlBuilder)
-		{
-			for (int i = 0; i < expression.Members.Count; i++)
-			{
-				MemberInfo m = expression.Members[i];
-				ConstantExpression c = expression.Arguments[i] as ConstantExpression;
-				sqlBuilder += m.Name + " =";
-				sqlBuilder.AddDbParameter(c.Value);
-				sqlBuilder += ",";
-			}
-			if (sqlBuilder[sqlBuilder.Length - 1] == ',')
-			{
-				sqlBuilder.Remove(sqlBuilder.Length - 1, 1);
-			}
-			return sqlBuilder;
-		}
+        protected override SqlBuilder Update(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            for (int i = 0; i < expression.Members.Count; i++)
+            {
+                MemberInfo m = expression.Members[i];
+                ConstantExpression c = expression.Arguments[i] as ConstantExpression;
+                sqlBuilder += m.Name + " =";
+                sqlBuilder.AddDbParameter(c.Value);
+                sqlBuilder += ",";
+            }
+            if (sqlBuilder[sqlBuilder.Length - 1] == ',')
+            {
+                sqlBuilder.Remove(sqlBuilder.Length - 1, 1);
+            }
+            return sqlBuilder;
+        }
 
-		protected override SqlBuilder Select(NewExpression expression, SqlBuilder sqlBuilder)
-		{
-			foreach (Expression item in expression.Arguments)
-			{
-				Expression2SqlProvider.Select(item, sqlBuilder);
-			}
-			return sqlBuilder;
-		}
+        protected override SqlBuilder Select(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            foreach (Expression item in expression.Arguments)
+            {
+                Expression2SqlProvider.Select(item, sqlBuilder);
+            }
+            return sqlBuilder;
+        }
 
-		protected override SqlBuilder GroupBy(NewExpression expression, SqlBuilder sqlBuilder)
-		{
-			foreach (Expression item in expression.Arguments)
-			{
-				Expression2SqlProvider.GroupBy(item, sqlBuilder);
-			}
-			return sqlBuilder;
-		}
+        protected override SqlBuilder GroupBy(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            foreach (Expression item in expression.Arguments)
+            {
+                Expression2SqlProvider.GroupBy(item, sqlBuilder);
+            }
+            return sqlBuilder;
+        }
 
-		protected override SqlBuilder OrderBy(NewExpression expression, SqlBuilder sqlBuilder)
-		{
-			foreach (Expression item in expression.Arguments)
-			{
-				Expression2SqlProvider.OrderBy(item, sqlBuilder);
-			}
-			return sqlBuilder;
-		}
-	}
+        protected override SqlBuilder OrderBy(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            foreach (Expression item in expression.Arguments)
+            {
+                Expression2SqlProvider.OrderBy(item, sqlBuilder);
+            }
+            return sqlBuilder;
+        }
+    }
 }

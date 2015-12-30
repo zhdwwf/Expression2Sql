@@ -17,9 +17,9 @@
 #endregion
 
 using System.Collections;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Diagnostics;
 
 namespace Expression2Sql
 {
