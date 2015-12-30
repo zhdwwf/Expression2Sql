@@ -24,7 +24,7 @@ namespace Expression2Sql
 {
 	class MethodCallExpression2Sql : BaseExpression2Sql<MethodCallExpression>
 	{
-		static Dictionary<string, Action<MethodCallExpression, SqlPack>> _Methods = new Dictionary<string, Action<MethodCallExpression, SqlPack>>
+		static Dictionary<string, Action<MethodCallExpression, SqlBuilder>> _Methods = new Dictionary<string, Action<MethodCallExpression, SqlBuilder>>
         {
             {"Like",Like},
             {"LikeLeft",LikeLeft},
@@ -32,50 +32,50 @@ namespace Expression2Sql
             {"In",In}
         };
 
-		private static new void In(MethodCallExpression expression, SqlPack sqlPack)
+		private static new void In(MethodCallExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.Where(expression.Arguments[0], sqlPack);
-			sqlPack += " in";
-			Expression2SqlProvider.In(expression.Arguments[1], sqlPack);
+			Expression2SqlProvider.Where(expression.Arguments[0], sqlBuilder);
+			sqlBuilder += " in";
+			Expression2SqlProvider.In(expression.Arguments[1], sqlBuilder);
 		}
 
-		private static void Like(MethodCallExpression expression, SqlPack sqlPack)
-		{
-			if (expression.Object != null)
-			{
-				Expression2SqlProvider.Where(expression.Object, sqlPack);
-			}
-			Expression2SqlProvider.Where(expression.Arguments[0], sqlPack);
-			sqlPack += " like '%' +";
-			Expression2SqlProvider.Where(expression.Arguments[1], sqlPack);
-			sqlPack += " + '%'";
-		}
-
-		private static void LikeLeft(MethodCallExpression expression, SqlPack sqlPack)
+		private static void Like(MethodCallExpression expression, SqlBuilder sqlBuilder)
 		{
 			if (expression.Object != null)
 			{
-				Expression2SqlProvider.Where(expression.Object, sqlPack);
+				Expression2SqlProvider.Where(expression.Object, sqlBuilder);
 			}
-			Expression2SqlProvider.Where(expression.Arguments[0], sqlPack);
-			sqlPack += " like '%' +";
-			Expression2SqlProvider.Where(expression.Arguments[1], sqlPack);
+			Expression2SqlProvider.Where(expression.Arguments[0], sqlBuilder);
+			sqlBuilder += " like '%' +";
+			Expression2SqlProvider.Where(expression.Arguments[1], sqlBuilder);
+			sqlBuilder += " + '%'";
 		}
 
-		private static void LikeRight(MethodCallExpression expression, SqlPack sqlPack)
+		private static void LikeLeft(MethodCallExpression expression, SqlBuilder sqlBuilder)
 		{
 			if (expression.Object != null)
 			{
-				Expression2SqlProvider.Where(expression.Object, sqlPack);
+				Expression2SqlProvider.Where(expression.Object, sqlBuilder);
 			}
-			Expression2SqlProvider.Where(expression.Arguments[0], sqlPack);
-			sqlPack += " like ";
-			Expression2SqlProvider.Where(expression.Arguments[1], sqlPack);
-			sqlPack += " + '%'";
+			Expression2SqlProvider.Where(expression.Arguments[0], sqlBuilder);
+			sqlBuilder += " like '%' +";
+			Expression2SqlProvider.Where(expression.Arguments[1], sqlBuilder);
+		}
+
+		private static void LikeRight(MethodCallExpression expression, SqlBuilder sqlBuilder)
+		{
+			if (expression.Object != null)
+			{
+				Expression2SqlProvider.Where(expression.Object, sqlBuilder);
+			}
+			Expression2SqlProvider.Where(expression.Arguments[0], sqlBuilder);
+			sqlBuilder += " like ";
+			Expression2SqlProvider.Where(expression.Arguments[1], sqlBuilder);
+			sqlBuilder += " + '%'";
 		}
 
 
-		protected override SqlPack Where(MethodCallExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Where(MethodCallExpression expression, SqlBuilder sqlBuilder)
 		{
 			var key = expression.Method;
 			if (key.IsGenericMethod)
@@ -83,11 +83,11 @@ namespace Expression2Sql
 				key = key.GetGenericMethodDefinition();
 			}
 
-			Action<MethodCallExpression, SqlPack> action;
+			Action<MethodCallExpression, SqlBuilder> action;
 			if (_Methods.TryGetValue(key.Name, out action))
 			{
-				action(expression, sqlPack);
-				return sqlPack;
+				action(expression, sqlBuilder);
+				return sqlBuilder;
 			}
 
 			throw new NotImplementedException("无法解析方法" + expression.Method);

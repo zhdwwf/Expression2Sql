@@ -22,23 +22,23 @@ namespace Expression2Sql
 {
 	class ConstantExpression2Sql : BaseExpression2Sql<ConstantExpression>
 	{
-		protected override SqlPack Where(ConstantExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Where(ConstantExpression expression, SqlBuilder sqlBuilder)
 		{
-			sqlPack.AddDbParameter(expression.Value);
-			return sqlPack;
+			sqlBuilder.AddDbParameter(expression.Value);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack In(ConstantExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder In(ConstantExpression expression, SqlBuilder sqlBuilder)
 		{
 			if (expression.Type.Name == "String")
 			{
-				sqlPack.Sql.AppendFormat("'{0}',", expression.Value);
+				sqlBuilder.AppendFormat("'{0}',", expression.Value);
 			}
 			else
 			{
-				sqlPack.Sql.AppendFormat("{0},", expression.Value);
+				sqlBuilder.AppendFormat("{0},", expression.Value);
 			}
-			return sqlPack;
+			return sqlBuilder;
 		}
 	}
 }

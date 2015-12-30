@@ -20,25 +20,25 @@ using System.Linq.Expressions;
 
 namespace Expression2Sql
 {
-	class NewArrayExpression2Sql : BaseExpression2Sql<NewArrayExpression>
-	{
-		protected override SqlPack In(NewArrayExpression expression, SqlPack sqlPack)
-		{
-			sqlPack += "(";
+    class NewArrayExpression2Sql : BaseExpression2Sql<NewArrayExpression>
+    {
+        protected override SqlBuilder In(NewArrayExpression expression, SqlBuilder sqlBuilder)
+        {
+            sqlBuilder += "(";
 
-			foreach (Expression expressionItem in expression.Expressions)
-			{
-				Expression2SqlProvider.In(expressionItem, sqlPack);
-			}
+            foreach (Expression expressionItem in expression.Expressions)
+            {
+                Expression2SqlProvider.In(expressionItem, sqlBuilder);
+            }
 
-			if (sqlPack.Sql[sqlPack.Sql.Length - 1] == ',')
-			{
-				sqlPack.Sql.Remove(sqlPack.Sql.Length - 1, 1);
-			}
+            if (sqlBuilder[sqlBuilder.Length - 1] == ',')
+            {
+                sqlBuilder.Remove(sqlBuilder.Length - 1, 1);
+            }
 
-			sqlPack += ")";
+            sqlBuilder += ")";
 
-			return sqlPack;
-		}
-	}
+            return sqlBuilder;
+        }
+    }
 }

@@ -40,72 +40,72 @@ namespace Expression2Sql
             return value;
         }
 
-        private SqlPack AggregateFunctionParser(MemberExpression expression, SqlPack sqlPack)
+        private SqlBuilder AggregateFunctionParser(MemberExpression expression, SqlBuilder sqlBuilder)
         {
             string aggregateFunctionName = new StackTrace(true).GetFrame(1).GetMethod().Name.ToLower();
 
             string tableName = expression.Member.DeclaringType.Name;
             string columnName = expression.Member.Name;
 
-            sqlPack.SetTableAlias(tableName);
-            string tableAlias = sqlPack.GetTableAlias(tableName);
+            sqlBuilder.SetTableAlias(tableName);
+            string tableAlias = sqlBuilder.GetTableAlias(tableName);
 
             if (!string.IsNullOrWhiteSpace(tableAlias))
             {
                 tableName += " " + tableAlias;
                 columnName = tableAlias + "." + columnName;
             }
-            sqlPack.Sql.AppendFormat("select {0}({1}) from {2}", aggregateFunctionName, columnName, tableName);
-            return sqlPack;
+            sqlBuilder.AppendFormat("select {0}({1}) from {2}", aggregateFunctionName, columnName, tableName);
+            return sqlBuilder;
         }
 
-        protected override SqlPack Select(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Select(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            sqlPack.SetTableAlias(expression.Member.DeclaringType.Name);
-            string tableAlias = sqlPack.GetTableAlias(expression.Member.DeclaringType.Name);
+            sqlBuilder.SetTableAlias(expression.Member.DeclaringType.Name);
+            string tableAlias = sqlBuilder.GetTableAlias(expression.Member.DeclaringType.Name);
             if (!string.IsNullOrWhiteSpace(tableAlias))
             {
                 tableAlias += ".";
             }
-            sqlPack.SelectFields.Add(tableAlias + expression.Member.Name);
-            return sqlPack;
+            sqlBuilder.SelectFields.Add(tableAlias + expression.Member.Name);
+            return sqlBuilder;
         }
 
-        protected override SqlPack Join(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Join(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            sqlPack.SetTableAlias(expression.Member.DeclaringType.Name);
-            string tableAlias = sqlPack.GetTableAlias(expression.Member.DeclaringType.Name);
+            sqlBuilder.SetTableAlias(expression.Member.DeclaringType.Name);
+            string tableAlias = sqlBuilder.GetTableAlias(expression.Member.DeclaringType.Name);
             if (!string.IsNullOrWhiteSpace(tableAlias))
             {
                 tableAlias += ".";
             }
-            sqlPack += " " + tableAlias + expression.Member.Name;
+            sqlBuilder += " " + tableAlias + expression.Member.Name;
 
-            return sqlPack;
+            return sqlBuilder;
         }
 
-        protected override SqlPack Where(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Where(MemberExpression expression, SqlBuilder sqlBuilder)
         {
             if (expression.Expression.NodeType == ExpressionType.Constant)
             {
                 object value = GetValue(expression);
-                sqlPack.AddDbParameter(value);
+                sqlBuilder.AddDbParameter(value);
             }
             else if (expression.Expression.NodeType == ExpressionType.Parameter)
             {
-                sqlPack.SetTableAlias(expression.Member.DeclaringType.Name);
-                string tableAlias = sqlPack.GetTableAlias(expression.Member.DeclaringType.Name);
+                sqlBuilder.SetTableAlias(expression.Member.DeclaringType.Name);
+                string tableAlias = sqlBuilder.GetTableAlias(expression.Member.DeclaringType.Name);
                 if (!string.IsNullOrWhiteSpace(tableAlias))
                 {
                     tableAlias += ".";
                 }
-                sqlPack += " " + tableAlias + expression.Member.Name;
+                sqlBuilder += " " + tableAlias + expression.Member.Name;
             }
 
-            return sqlPack;
+            return sqlBuilder;
         }
 
-        protected override SqlPack In(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder In(MemberExpression expression, SqlBuilder sqlBuilder)
         {
             var field = expression.Member as FieldInfo;
             if (field != null)
@@ -132,51 +132,51 @@ namespace Expression2Sql
                     {
                         itemJoinStr = itemJoinStr.Remove(0, 1);
                         itemJoinStr = string.Format("({0})", itemJoinStr);
-                        sqlPack += itemJoinStr;
+                        sqlBuilder += itemJoinStr;
                     }
                 }
             }
 
-            return sqlPack;
+            return sqlBuilder;
         }
 
-        protected override SqlPack GroupBy(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder GroupBy(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            sqlPack.SetTableAlias(expression.Member.DeclaringType.Name);
-            sqlPack += sqlPack.GetTableAlias(expression.Member.DeclaringType.Name) + "." + expression.Member.Name;
-            return sqlPack;
+            sqlBuilder.SetTableAlias(expression.Member.DeclaringType.Name);
+            sqlBuilder += sqlBuilder.GetTableAlias(expression.Member.DeclaringType.Name) + "." + expression.Member.Name;
+            return sqlBuilder;
         }
 
-        protected override SqlPack OrderBy(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder OrderBy(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            sqlPack.SetTableAlias(expression.Member.DeclaringType.Name);
-            sqlPack += sqlPack.GetTableAlias(expression.Member.DeclaringType.Name) + "." + expression.Member.Name;
-            return sqlPack;
+            sqlBuilder.SetTableAlias(expression.Member.DeclaringType.Name);
+            sqlBuilder += sqlBuilder.GetTableAlias(expression.Member.DeclaringType.Name) + "." + expression.Member.Name;
+            return sqlBuilder;
         }
 
-        protected override SqlPack Max(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Max(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            return AggregateFunctionParser(expression, sqlPack);
+            return AggregateFunctionParser(expression, sqlBuilder);
         }
 
-        protected override SqlPack Min(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Min(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            return AggregateFunctionParser(expression, sqlPack);
+            return AggregateFunctionParser(expression, sqlBuilder);
         }
 
-        protected override SqlPack Avg(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Avg(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            return AggregateFunctionParser(expression, sqlPack);
+            return AggregateFunctionParser(expression, sqlBuilder);
         }
 
-        protected override SqlPack Count(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Count(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            return AggregateFunctionParser(expression, sqlPack);
+            return AggregateFunctionParser(expression, sqlBuilder);
         }
 
-        protected override SqlPack Sum(MemberExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Sum(MemberExpression expression, SqlBuilder sqlBuilder)
         {
-            return AggregateFunctionParser(expression, sqlPack);
+            return AggregateFunctionParser(expression, sqlBuilder);
         }
     }
 }

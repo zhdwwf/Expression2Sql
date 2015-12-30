@@ -22,28 +22,28 @@ namespace Expression2Sql
 {
 	public interface IExpression2Sql
 	{
-		SqlPack Update(Expression expression, SqlPack sqlPack);
+		SqlBuilder Update(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack Select(Expression expression, SqlPack sqlPack);
+		SqlBuilder Select(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack Join(Expression expression, SqlPack sqlPack);
+		SqlBuilder Join(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack Where(Expression expression, SqlPack sqlPack);
+		SqlBuilder Where(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack In(Expression expression, SqlPack sqlPack);
+		SqlBuilder In(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack GroupBy(Expression expression, SqlPack sqlPack);
+		SqlBuilder GroupBy(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack OrderBy(Expression expression, SqlPack sqlPack);
+		SqlBuilder OrderBy(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack Max(Expression expression, SqlPack sqlPack);
+		SqlBuilder Max(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack Min(Expression expression, SqlPack sqlPack);
+		SqlBuilder Min(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack Avg(Expression expression, SqlPack sqlPack);
+		SqlBuilder Avg(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack Count(Expression expression, SqlPack sqlPack);
+		SqlBuilder Count(Expression expression, SqlBuilder sqlBuilder);
 
-		SqlPack Sum(Expression expression, SqlPack sqlPack);
+		SqlBuilder Sum(Expression expression, SqlBuilder sqlBuilder);
 	}
 }

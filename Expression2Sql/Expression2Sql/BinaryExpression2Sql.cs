@@ -23,49 +23,49 @@ namespace Expression2Sql
 {
     class BinaryExpression2Sql : BaseExpression2Sql<BinaryExpression>
     {
-        private void OperatorParser(ExpressionType expressionNodeType, int operatorIndex, SqlPack sqlPack, bool useIs = false)
+        private void OperatorParser(ExpressionType expressionNodeType, int operatorIndex, SqlBuilder sqlBuilder, bool useIs = false)
         {
             switch (expressionNodeType)
             {
                 case ExpressionType.And:
                 case ExpressionType.AndAlso:
-                    sqlPack.Sql.Insert(operatorIndex, "\nand");
+                    sqlBuilder.Insert(operatorIndex, "\nand");
                     break;
                 case ExpressionType.Equal:
                     if (useIs)
                     {
-                        sqlPack.Sql.Insert(operatorIndex, " is");
+                        sqlBuilder.Insert(operatorIndex, " is");
                     }
                     else
                     {
-                        sqlPack.Sql.Insert(operatorIndex, " =");
+                        sqlBuilder.Insert(operatorIndex, " =");
                     }
                     break;
                 case ExpressionType.GreaterThan:
-                    sqlPack.Sql.Insert(operatorIndex, " >");
+                    sqlBuilder.Insert(operatorIndex, " >");
                     break;
                 case ExpressionType.GreaterThanOrEqual:
-                    sqlPack.Sql.Insert(operatorIndex, " >=");
+                    sqlBuilder.Insert(operatorIndex, " >=");
                     break;
                 case ExpressionType.NotEqual:
                     if (useIs)
                     {
-                        sqlPack.Sql.Insert(operatorIndex, " is not");
+                        sqlBuilder.Insert(operatorIndex, " is not");
                     }
                     else
                     {
-                        sqlPack.Sql.Insert(operatorIndex, " <>");
+                        sqlBuilder.Insert(operatorIndex, " <>");
                     }
                     break;
                 case ExpressionType.Or:
                 case ExpressionType.OrElse:
-                    sqlPack.Sql.Insert(operatorIndex, "\nor");
+                    sqlBuilder.Insert(operatorIndex, "\nor");
                     break;
                 case ExpressionType.LessThan:
-                    sqlPack.Sql.Insert(operatorIndex, " <");
+                    sqlBuilder.Insert(operatorIndex, " <");
                     break;
                 case ExpressionType.LessThanOrEqual:
-                    sqlPack.Sql.Insert(operatorIndex, " <=");
+                    sqlBuilder.Insert(operatorIndex, " <=");
                     break;
                 default:
                     throw new NotImplementedException("未实现的节点类型" + expressionNodeType);
@@ -245,62 +245,62 @@ namespace Expression2Sql
             return true;
         }
 
-        protected override SqlPack Join(BinaryExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Join(BinaryExpression expression, SqlBuilder sqlBuilder)
         {
-            Expression2SqlProvider.Join(expression.Left, sqlPack);
-            int operatorIndex = sqlPack.Sql.Length;
+            Expression2SqlProvider.Join(expression.Left, sqlBuilder);
+            int operatorIndex = sqlBuilder.Length;
 
-            Expression2SqlProvider.Join(expression.Right, sqlPack);
-            int sqlLength = sqlPack.Sql.Length;
+            Expression2SqlProvider.Join(expression.Right, sqlBuilder);
+            int sqlLength = sqlBuilder.Length;
 
-            if (sqlLength - operatorIndex == 5 && sqlPack.ToString().EndsWith("null"))
+            if (sqlLength - operatorIndex == 5 && sqlBuilder.Sql.EndsWith("null"))
             {
-                OperatorParser(expression.NodeType, operatorIndex, sqlPack, true);
+                OperatorParser(expression.NodeType, operatorIndex, sqlBuilder, true);
             }
             else
             {
-                OperatorParser(expression.NodeType, operatorIndex, sqlPack);
+                OperatorParser(expression.NodeType, operatorIndex, sqlBuilder);
             }
 
-            return sqlPack;
+            return sqlBuilder;
         }
 
-        protected override SqlPack Where(BinaryExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Where(BinaryExpression expression, SqlBuilder sqlBuilder)
         {
             if (IsNeedsParentheses(expression, expression.Left))
             {
-                sqlPack += "(";
-                Expression2SqlProvider.Where(expression.Left, sqlPack);
-                sqlPack += ")";
+                sqlBuilder += "(";
+                Expression2SqlProvider.Where(expression.Left, sqlBuilder);
+                sqlBuilder += ")";
             }
             else
             {
-                Expression2SqlProvider.Where(expression.Left, sqlPack);
+                Expression2SqlProvider.Where(expression.Left, sqlBuilder);
             }
-            int signIndex = sqlPack.Length;
+            int signIndex = sqlBuilder.Length;
 
             if (IsNeedsParentheses(expression, expression.Right))
             {
-                sqlPack += "(";
-                Expression2SqlProvider.Where(expression.Right, sqlPack);
-                sqlPack += ")";
+                sqlBuilder += "(";
+                Expression2SqlProvider.Where(expression.Right, sqlBuilder);
+                sqlBuilder += ")";
             }
             else
             {
-                Expression2SqlProvider.Where(expression.Right, sqlPack);
+                Expression2SqlProvider.Where(expression.Right, sqlBuilder);
             }
-            int sqlLength = sqlPack.Length;
+            int sqlLength = sqlBuilder.Length;
 
-            if (sqlLength - signIndex == 5 && sqlPack.ToString().EndsWith("null"))
+            if (sqlLength - signIndex == 5 && sqlBuilder.ToString().EndsWith("null"))
             {
-                OperatorParser(expression.NodeType, signIndex, sqlPack, true);
+                OperatorParser(expression.NodeType, signIndex, sqlBuilder, true);
             }
             else
             {
-                OperatorParser(expression.NodeType, signIndex, sqlPack);
+                OperatorParser(expression.NodeType, signIndex, sqlBuilder);
             }
 
-            return sqlPack;
+            return sqlBuilder;
         }
     }
 }

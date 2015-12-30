@@ -133,64 +133,64 @@ namespace Expression2Sql
             throw new NotImplementedException("未实现的Expression2Sql");
         }
 
-        public static void Update(Expression expression, SqlPack sqlPack)
+        public static void Update(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Update(expression, sqlPack);
+            GetExpression2Sql(expression).Update(expression, sqlBuilder);
         }
 
-        public static void Select(Expression expression, SqlPack sqlPack)
+        public static void Select(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Select(expression, sqlPack);
+            GetExpression2Sql(expression).Select(expression, sqlBuilder);
         }
 
-        public static void Join(Expression expression, SqlPack sqlPack)
+        public static void Join(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Join(expression, sqlPack);
+            GetExpression2Sql(expression).Join(expression, sqlBuilder);
         }
 
-        public static void Where(Expression expression, SqlPack sqlPack)
+        public static void Where(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Where(expression, sqlPack);
+            GetExpression2Sql(expression).Where(expression, sqlBuilder);
         }
 
-        public static void In(Expression expression, SqlPack sqlPack)
+        public static void In(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).In(expression, sqlPack);
+            GetExpression2Sql(expression).In(expression, sqlBuilder);
         }
 
-        public static void GroupBy(Expression expression, SqlPack sqlPack)
+        public static void GroupBy(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).GroupBy(expression, sqlPack);
+            GetExpression2Sql(expression).GroupBy(expression, sqlBuilder);
         }
 
-        public static void OrderBy(Expression expression, SqlPack sqlPack)
+        public static void OrderBy(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).OrderBy(expression, sqlPack);
+            GetExpression2Sql(expression).OrderBy(expression, sqlBuilder);
         }
 
-        public static void Max(Expression expression, SqlPack sqlPack)
+        public static void Max(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Max(expression, sqlPack);
+            GetExpression2Sql(expression).Max(expression, sqlBuilder);
         }
 
-        public static void Min(Expression expression, SqlPack sqlPack)
+        public static void Min(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Min(expression, sqlPack);
+            GetExpression2Sql(expression).Min(expression, sqlBuilder);
         }
 
-        public static void Avg(Expression expression, SqlPack sqlPack)
+        public static void Avg(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Avg(expression, sqlPack);
+            GetExpression2Sql(expression).Avg(expression, sqlBuilder);
         }
 
-        public static void Count(Expression expression, SqlPack sqlPack)
+        public static void Count(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Count(expression, sqlPack);
+            GetExpression2Sql(expression).Count(expression, sqlBuilder);
         }
 
-        public static void Sum(Expression expression, SqlPack sqlPack)
+        public static void Sum(Expression expression, SqlBuilder sqlBuilder)
         {
-            GetExpression2Sql(expression).Sum(expression, sqlPack);
+            GetExpression2Sql(expression).Sum(expression, sqlBuilder);
         }
     }
 }

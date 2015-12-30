@@ -226,7 +226,7 @@ namespace Expression2SqlTest
             {
                 Console.WriteLine(description);
             }
-            Console.WriteLine(expression2Sql.SqlStr);
+            Console.WriteLine(expression2Sql.Sql);
             foreach (KeyValuePair<string, object> item in expression2Sql.DbParams)
             {
                 Console.WriteLine(item.ToString());

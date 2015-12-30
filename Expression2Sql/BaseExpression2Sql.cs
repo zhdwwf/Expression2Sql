@@ -23,103 +23,103 @@ namespace Expression2Sql
 {
 	public abstract class BaseExpression2Sql<T> : IExpression2Sql where T : Expression
 	{
-		protected virtual SqlPack Update(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Update(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Update方法");
 		}
-		protected virtual SqlPack Select(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Select(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Select方法");
 		}
-		protected virtual SqlPack Join(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Join(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Join方法");
 		}
-		protected virtual SqlPack Where(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Where(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Where方法");
 		}
-		protected virtual SqlPack In(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder In(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.In方法");
 		}
-		protected virtual SqlPack GroupBy(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder GroupBy(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.GroupBy方法");
 		}
-		protected virtual SqlPack OrderBy(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder OrderBy(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.OrderBy方法");
 		}
-		protected virtual SqlPack Max(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Max(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Max方法");
 		}
-		protected virtual SqlPack Min(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Min(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Min方法");
 		}
-		protected virtual SqlPack Avg(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Avg(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Avg方法");
 		}
-		protected virtual SqlPack Count(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Count(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Count方法");
 		}
-		protected virtual SqlPack Sum(T expression, SqlPack sqlPack)
+		protected virtual SqlBuilder Sum(T expression, SqlBuilder sqlBuilder)
 		{
 			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Sum方法");
 		}
 
 
-		public SqlPack Update(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Update(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Update((T)expression, sqlPack);
+			return Update((T)expression, sqlBuilder);
 		}
-		public SqlPack Select(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Select(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Select((T)expression, sqlPack);
+			return Select((T)expression, sqlBuilder);
 		}
-		public SqlPack Join(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Join(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Join((T)expression, sqlPack);
+			return Join((T)expression, sqlBuilder);
 		}
-		public SqlPack Where(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Where(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Where((T)expression, sqlPack);
+			return Where((T)expression, sqlBuilder);
 		}
-		public SqlPack In(Expression expression, SqlPack sqlPack)
+		public SqlBuilder In(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return In((T)expression, sqlPack);
+			return In((T)expression, sqlBuilder);
 		}
-		public SqlPack GroupBy(Expression expression, SqlPack sqlPack)
+		public SqlBuilder GroupBy(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return GroupBy((T)expression, sqlPack);
+			return GroupBy((T)expression, sqlBuilder);
 		}
-		public SqlPack OrderBy(Expression expression, SqlPack sqlPack)
+		public SqlBuilder OrderBy(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return OrderBy((T)expression, sqlPack);
+			return OrderBy((T)expression, sqlBuilder);
 		}
-		public SqlPack Max(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Max(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Max((T)expression, sqlPack);
+			return Max((T)expression, sqlBuilder);
 		}
-		public SqlPack Min(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Min(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Min((T)expression, sqlPack);
+			return Min((T)expression, sqlBuilder);
 		}
-		public SqlPack Avg(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Avg(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Avg((T)expression, sqlPack);
+			return Avg((T)expression, sqlBuilder);
 		}
-		public SqlPack Count(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Count(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Count((T)expression, sqlPack);
+			return Count((T)expression, sqlBuilder);
 		}
-		public SqlPack Sum(Expression expression, SqlPack sqlPack)
+		public SqlBuilder Sum(Expression expression, SqlBuilder sqlBuilder)
 		{
-			return Sum((T)expression, sqlPack);
+			return Sum((T)expression, sqlBuilder);
 		}
 	}
 }

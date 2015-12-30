@@ -22,58 +22,58 @@ namespace Expression2Sql
 {
 	class UnaryExpression2Sql : BaseExpression2Sql<UnaryExpression>
 	{
-		protected override SqlPack Select(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Select(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.Select(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.Select(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack Where(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Where(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.Where(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.Where(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack GroupBy(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder GroupBy(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.GroupBy(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.GroupBy(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack OrderBy(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder OrderBy(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.OrderBy(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.OrderBy(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack Max(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Max(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.Max(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.Max(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack Min(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Min(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.Min(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.Min(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack Avg(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Avg(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.Avg(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.Avg(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack Count(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Count(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.Count(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.Count(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 
-		protected override SqlPack Sum(UnaryExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Sum(UnaryExpression expression, SqlBuilder sqlBuilder)
 		{
-			Expression2SqlProvider.Sum(expression.Operand, sqlPack);
-			return sqlPack;
+			Expression2SqlProvider.Sum(expression.Operand, sqlBuilder);
+			return sqlBuilder;
 		}
 	}
 }

@@ -23,53 +23,53 @@ namespace Expression2Sql
 {
 	class NewExpression2Sql : BaseExpression2Sql<NewExpression>
 	{
-        protected override SqlPack Where(NewExpression expression, SqlPack sqlPack)
+        protected override SqlBuilder Where(NewExpression expression, SqlBuilder sqlBuilder)
         {
-            return base.Where(expression, sqlPack);
+            return base.Where(expression, sqlBuilder);
         }
 
-		protected override SqlPack Update(NewExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Update(NewExpression expression, SqlBuilder sqlBuilder)
 		{
 			for (int i = 0; i < expression.Members.Count; i++)
 			{
 				MemberInfo m = expression.Members[i];
 				ConstantExpression c = expression.Arguments[i] as ConstantExpression;
-				sqlPack += m.Name + " =";
-				sqlPack.AddDbParameter(c.Value);
-				sqlPack += ",";
+				sqlBuilder += m.Name + " =";
+				sqlBuilder.AddDbParameter(c.Value);
+				sqlBuilder += ",";
 			}
-			if (sqlPack[sqlPack.Length - 1] == ',')
+			if (sqlBuilder[sqlBuilder.Length - 1] == ',')
 			{
-				sqlPack.Sql.Remove(sqlPack.Length - 1, 1);
+				sqlBuilder.Remove(sqlBuilder.Length - 1, 1);
 			}
-			return sqlPack;
+			return sqlBuilder;
 		}
 
-		protected override SqlPack Select(NewExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder Select(NewExpression expression, SqlBuilder sqlBuilder)
 		{
 			foreach (Expression item in expression.Arguments)
 			{
-				Expression2SqlProvider.Select(item, sqlPack);
+				Expression2SqlProvider.Select(item, sqlBuilder);
 			}
-			return sqlPack;
+			return sqlBuilder;
 		}
 
-		protected override SqlPack GroupBy(NewExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder GroupBy(NewExpression expression, SqlBuilder sqlBuilder)
 		{
 			foreach (Expression item in expression.Arguments)
 			{
-				Expression2SqlProvider.GroupBy(item, sqlPack);
+				Expression2SqlProvider.GroupBy(item, sqlBuilder);
 			}
-			return sqlPack;
+			return sqlBuilder;
 		}
 
-		protected override SqlPack OrderBy(NewExpression expression, SqlPack sqlPack)
+		protected override SqlBuilder OrderBy(NewExpression expression, SqlBuilder sqlBuilder)
 		{
 			foreach (Expression item in expression.Arguments)
 			{
-				Expression2SqlProvider.OrderBy(item, sqlPack);
+				Expression2SqlProvider.OrderBy(item, sqlBuilder);
 			}
-			return sqlPack;
+			return sqlBuilder;
 		}
 	}
 }
