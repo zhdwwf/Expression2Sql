@@ -160,9 +160,9 @@ namespace Expression2Sql
 
         private static bool NeedsParenthesesPrecedence(Expression parent, Expression child)
         {
-            int operatorPrecedence = GetOperatorPrecedence(child);
-            int operatorPrecedence2 = GetOperatorPrecedence(parent);
-            if (operatorPrecedence == operatorPrecedence2)
+            int operatorPrecedenceChild = GetOperatorPrecedence(child);
+            int operatorPrecedenceParent = GetOperatorPrecedence(parent);
+            if (operatorPrecedenceChild == operatorPrecedenceParent)
             {
                 var nodeType = parent.NodeType;
                 if (nodeType <= ExpressionType.MultiplyChecked)
@@ -221,7 +221,7 @@ namespace Expression2Sql
                 }
                 return false;
             }
-            return (child.NodeType == ExpressionType.Constant && (parent.NodeType == ExpressionType.Negate || parent.NodeType == ExpressionType.NegateChecked)) || operatorPrecedence < operatorPrecedence2;
+            return (child.NodeType == ExpressionType.Constant && (parent.NodeType == ExpressionType.Negate || parent.NodeType == ExpressionType.NegateChecked)) || operatorPrecedenceChild < operatorPrecedenceParent;
         }
 
         private static bool IsNeedsParentheses(Expression parent, Expression child)
@@ -244,7 +244,7 @@ namespace Expression2Sql
             }
             return true;
         }
-
+        
         protected override SqlBuilder Join(BinaryExpression expression, SqlBuilder sqlBuilder)
         {
             Expression2SqlProvider.Join(expression.Left, sqlBuilder);

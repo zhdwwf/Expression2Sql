@@ -15,16 +15,39 @@ namespace Expression2SqlTest
         {
             Console.Title = "Expression2SqlTest";
 
-            ExpressionToSql<UserInfo> userInfoSql = new ExpressionToSql<UserInfo>(new MySQLSqlParser());
-            Printf(
-                    userInfoSql.Select().Where(u => u.Id != 1),
-                    "查询单表，带where条件，实例类"
+            UserInfo user = Orm.Find(
+                ExpressionToSqlSQLServer.Select<UserInfo>().
+                                         Where(u => u.Id == 1)
             );
 
-            Printf(
-                    ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id),
-                    "查询单表单个字段，静态类"
+            List<UserInfo> list = Orm.Query(
+                ExpressionToSqlSQLServer.Select<UserInfo>().
+                                         Where(u => u.Id != null).
+                                         OrderBy(u => u.Id)
             );
+
+            int result = Orm.Execute(
+                ExpressionToSqlSQLServer.Delete<UserInfo>().
+                                         Where(u => u.Id == 1)
+            );
+
+            object val = Orm.GetValue(
+                ExpressionToSqlSQLServer.Max<UserInfo>(u => u.Id)
+            );
+
+            if (true)
+            {
+                ExpressionToSql<UserInfo> userInfoSql = new ExpressionToSql<UserInfo>(new MySQLSqlParser());
+                Printf(
+                        userInfoSql.Select().Where(u => u.Id != 1),
+                        "查询单表，带where条件，实例类"
+                );
+
+                Printf(
+                        ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id),
+                        "查询单表单个字段，静态类"
+                );
+            }
 
 
             if (true)
@@ -40,7 +63,7 @@ namespace Expression2SqlTest
                 );
 
                 Printf(
-                    ExpressionToSqlSQLServer.Select<UserInfo>(u => new { u.Id, u.Name }),
+                    ExpressionToSqlSQLServer.Select<UserInfo>(u => new { id = u.Id, u.Name }),
                     "查询单表多个字段"
                 );
 
@@ -64,7 +87,7 @@ namespace Expression2SqlTest
 
                 Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Name).
-                                             Where(u => u.Id.In(1, 2, 3)),
+                                             Where(u => u.Id.In(1, 2, 3, 4, 5)),
                     "查询单表，带where in条件，写法一"
                 );
 
@@ -213,11 +236,9 @@ namespace Expression2SqlTest
                                               Where(u => u.Id == 1),
                      "根据where条件更新指定表记录"
                 );
+
+                //to be continued...
             }
-
-
-
-            //to be continued...
         }
 
         private static void Printf<T>(ExpressionToSql<T> expression2Sql, string description = "")
@@ -234,5 +255,6 @@ namespace Expression2SqlTest
             Console.WriteLine();
             Console.WriteLine();
         }
+
     }
 }

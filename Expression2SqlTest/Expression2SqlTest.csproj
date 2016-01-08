@@ -41,10 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbHelper.cs" />
+    <Compile Include="Mapping.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Orm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Student.cs" />

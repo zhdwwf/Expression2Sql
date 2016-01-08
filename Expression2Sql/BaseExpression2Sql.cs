@@ -18,11 +18,22 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Expression2Sql
 {
     public abstract class BaseExpression2Sql<T> : IExpression2Sql where T : Expression
     {
+        private void Debug()
+        {
+            if (false)
+            {
+                Console.WriteLine(typeof(T).Name + "." + new StackTrace().GetFrame(1).GetMethod().Name);
+            }
+        }
+
+
         protected virtual SqlBuilder Update(T expression, SqlBuilder sqlBuilder)
         {
             throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Update方法");
@@ -75,50 +86,62 @@ namespace Expression2Sql
 
         public SqlBuilder Update(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Update((T)expression, sqlBuilder);
         }
         public SqlBuilder Select(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Select((T)expression, sqlBuilder);
         }
         public SqlBuilder Join(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Join((T)expression, sqlBuilder);
         }
         public SqlBuilder Where(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Where((T)expression, sqlBuilder);
         }
         public SqlBuilder In(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return In((T)expression, sqlBuilder);
         }
         public SqlBuilder GroupBy(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return GroupBy((T)expression, sqlBuilder);
         }
         public SqlBuilder OrderBy(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return OrderBy((T)expression, sqlBuilder);
         }
         public SqlBuilder Max(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Max((T)expression, sqlBuilder);
         }
         public SqlBuilder Min(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Min((T)expression, sqlBuilder);
         }
         public SqlBuilder Avg(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Avg((T)expression, sqlBuilder);
         }
         public SqlBuilder Count(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Count((T)expression, sqlBuilder);
         }
         public SqlBuilder Sum(Expression expression, SqlBuilder sqlBuilder)
         {
+            Debug();
             return Sum((T)expression, sqlBuilder);
         }
     }
