@@ -133,6 +133,11 @@ namespace Expression2Sql
             throw new NotImplementedException("未实现的Expression2Sql");
         }
 
+        public static void Insert(Expression expression, SqlBuilder sqlBuilder)
+        {
+            GetExpression2Sql(expression).Insert(expression, sqlBuilder);
+        }
+
         public static void Update(Expression expression, SqlBuilder sqlBuilder)
         {
             GetExpression2Sql(expression).Update(expression, sqlBuilder);

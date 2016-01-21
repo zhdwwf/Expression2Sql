@@ -30,7 +30,7 @@ namespace Expression2Sql
         {
             get
             {
-                return this._sqlBuilder.Sql;
+                return this._sqlBuilder.Sql + ";";
             }
         }
         public Dictionary<string, object> DbParams
@@ -254,6 +254,15 @@ namespace Expression2Sql
             return this;
         }
 
+        public ExpressionToSql<T> Insert(Expression<Func<object>> expression = null)
+        {
+            this._sqlBuilder.Clear();
+            this._sqlBuilder.IsSingleTable = true;
+            this._sqlBuilder += "insert into " + typeof(T).Name;
+            Expression2SqlProvider.Insert(expression.Body, this._sqlBuilder);
+            return this;
+        }
+
         public ExpressionToSql<T> Delete()
         {
             this._sqlBuilder.Clear();
@@ -263,7 +272,7 @@ namespace Expression2Sql
             this._sqlBuilder += "delete " + tableName;
             return this;
         }
-
+        
         public ExpressionToSql<T> Update(Expression<Func<object>> expression = null)
         {
             this._sqlBuilder.Clear();

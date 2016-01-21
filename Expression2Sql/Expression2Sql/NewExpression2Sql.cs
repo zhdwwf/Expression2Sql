@@ -28,6 +28,38 @@ namespace Expression2Sql
             return base.Where(expression, sqlBuilder);
         }
 
+        protected override SqlBuilder Insert(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            string columns = " (";
+            string values = " values (";
+
+            for (int i = 0; i < expression.Members.Count; i++)
+            {
+                MemberInfo m = expression.Members[i];
+                columns += m.Name + ",";
+
+                ConstantExpression c = expression.Arguments[i] as ConstantExpression;
+                string dbParamName = sqlBuilder.AddDbParameter(c.Value, false);
+                values += dbParamName + ",";
+            }
+
+            if (columns[columns.Length - 1] == ',')
+            {
+                columns = columns.Remove(columns.Length - 1, 1);
+            }
+            columns += ")";
+
+            if (values[values.Length - 1] == ',')
+            {
+                values = values.Remove(values.Length - 1, 1);
+            }
+            values += ")";
+
+            sqlBuilder += columns + values;
+
+            return sqlBuilder;
+        }
+
         protected override SqlBuilder Update(NewExpression expression, SqlBuilder sqlBuilder)
         {
             for (int i = 0; i < expression.Members.Count; i++)

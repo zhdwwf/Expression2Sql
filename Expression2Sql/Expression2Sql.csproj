@@ -45,10 +45,8 @@
     <Compile Include="DbSqlParser\OracleSqlParser.cs" />
     <Compile Include="DbSqlParser\SQLiteSqlParser.cs" />
     <Compile Include="DbSqlParser\SQLServerSqlParser.cs" />
-    <Compile Include="Enums.cs" />
     <Compile Include="Expression2SqlEx.cs" />
     <Compile Include="Expression2Sql\ParameterExpression2Sql.cs" />
-    <Compile Include="ExpressionToSqlSQLServer.cs" />
     <Compile Include="Expression2Sql\BinaryExpression2Sql.cs" />
     <Compile Include="Expression2Sql\ConstantExpression2Sql.cs" />
     <Compile Include="Expression2Sql\MemberExpression2Sql.cs" />
@@ -62,6 +60,7 @@
     <Compile Include="Expression2SqlProvider.cs" />
     <Compile Include="SqlBuilder.cs" />
     <Compile Include="ExpressionToSql.cs" />
+    <Compile Include="StaticClass\ExpressionToSqlSQLServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

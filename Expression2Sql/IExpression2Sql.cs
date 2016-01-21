@@ -22,6 +22,8 @@ namespace Expression2Sql
 {
     public interface IExpression2Sql
     {
+        SqlBuilder Insert(Expression expression, SqlBuilder sqlBuilder);
+
         SqlBuilder Update(Expression expression, SqlBuilder sqlBuilder);
 
         SqlBuilder Select(Expression expression, SqlBuilder sqlBuilder);

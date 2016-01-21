@@ -34,6 +34,10 @@ namespace Expression2Sql
         }
 
 
+        protected virtual SqlBuilder Insert(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Insert方法");
+        }
         protected virtual SqlBuilder Update(T expression, SqlBuilder sqlBuilder)
         {
             throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Update方法");
@@ -84,6 +88,11 @@ namespace Expression2Sql
         }
 
 
+        public SqlBuilder Insert(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Insert((T)expression, sqlBuilder);
+        }
         public SqlBuilder Update(Expression expression, SqlBuilder sqlBuilder)
         {
             Debug();

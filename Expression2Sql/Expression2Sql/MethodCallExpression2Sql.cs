@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
 
 namespace Expression2Sql
 {
@@ -29,10 +30,10 @@ namespace Expression2Sql
             {"Like",Like},
             {"LikeLeft",LikeLeft},
             {"LikeRight",LikeRight},
-            {"In",In}
+            {"In",InnerIn}
         };
 
-        private static new void In(MethodCallExpression expression, SqlBuilder sqlBuilder)
+        private static void InnerIn(MethodCallExpression expression, SqlBuilder sqlBuilder)
         {
             Expression2SqlProvider.Where(expression.Arguments[0], sqlBuilder);
             sqlBuilder += " in";
@@ -73,8 +74,7 @@ namespace Expression2Sql
             Expression2SqlProvider.Where(expression.Arguments[1], sqlBuilder);
             sqlBuilder += " + '%'";
         }
-
-
+        
         protected override SqlBuilder Where(MethodCallExpression expression, SqlBuilder sqlBuilder)
         {
             var key = expression.Method;

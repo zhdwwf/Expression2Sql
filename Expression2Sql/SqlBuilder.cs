@@ -32,11 +32,11 @@ namespace Expression2Sql
         private IDbSqlParser _dbSqlParser;
         private StringBuilder _sqlBuilder;
 
-        public bool IsSingleTable { get; set; }
+        internal bool IsSingleTable { get; set; }
 
-        public List<string> SelectFields { get; set; }
+        internal List<string> SelectFields { get; set; }
 
-        public string SelectFieldsStr
+        internal string SelectFieldsStr
         {
             get
             {
@@ -44,7 +44,7 @@ namespace Expression2Sql
             }
         }
 
-        public int Length
+        internal int Length
         {
             get
             {
@@ -52,14 +52,14 @@ namespace Expression2Sql
             }
         }
 
-        public string Sql
+        internal string Sql
         {
-            get { return this._sqlBuilder.ToString(); }
+            get { return this.ToString(); }
         }
 
-        public Dictionary<string, object> DbParams { get; private set; }
+        internal Dictionary<string, object> DbParams { get; private set; }
 
-        public char this[int index]
+        internal char this[int index]
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Expression2Sql
             }
         }
 
-        public SqlBuilder(IDbSqlParser dbSqlParser)
+        internal SqlBuilder(IDbSqlParser dbSqlParser)
         {
             this.DbParams = new Dictionary<string, object>();
             this._sqlBuilder = new StringBuilder();
@@ -81,7 +81,7 @@ namespace Expression2Sql
             return sqlBuilder;
         }
 
-        public void Clear()
+        internal void Clear()
         {
             this.SelectFields.Clear();
             this._sqlBuilder.Clear();
@@ -90,21 +90,29 @@ namespace Expression2Sql
             this._queueEnglishWords = new Queue<string>(S_listEnglishWords);
         }
 
-        public void AddDbParameter(object parameterValue)
+        internal string AddDbParameter(object dbParamValue, bool allowAutoAppend = true)
         {
-            if (parameterValue == null || parameterValue == DBNull.Value)
+            string dbParamName = "";
+            if (dbParamValue == null || dbParamValue == DBNull.Value)
             {
-                this._sqlBuilder.Append(" null");
+                if (allowAutoAppend)
+                {
+                    this._sqlBuilder.Append(" null");
+                }
             }
             else
             {
-                string name = this._dbSqlParser.DbParamPrefix + "param" + this.DbParams.Count;
-                this.DbParams.Add(name, parameterValue);
-                this._sqlBuilder.Append(" " + name);
+                dbParamName = this._dbSqlParser.DbParamPrefix + "param" + this.DbParams.Count;
+                this.DbParams.Add(dbParamName, dbParamValue);
+                if (allowAutoAppend)
+                {
+                    this._sqlBuilder.Append(" " + dbParamName);
+                }
             }
+            return dbParamName;
         }
 
-        public bool SetTableAlias(string tableName)
+        internal bool SetTableAlias(string tableName)
         {
             if (!this._dicTableName.Keys.Contains(tableName))
             {
@@ -114,7 +122,7 @@ namespace Expression2Sql
             return false;
         }
 
-        public string GetTableAlias(string tableName)
+        internal string GetTableAlias(string tableName)
         {
             if (!this.IsSingleTable && this._dicTableName.Keys.Contains(tableName))
             {
@@ -129,27 +137,27 @@ namespace Expression2Sql
         }
 
         #region StringBuilder 方法封装
-        public void Insert(int index, string value)
+        internal void Insert(int index, string value)
         {
             this._sqlBuilder.Insert(index, value);
         }
 
-        public void AppendFormat(string format, object arg0)
+        internal void AppendFormat(string format, object arg0)
         {
             this._sqlBuilder.AppendFormat(format, arg0);
         }
 
-        public void AppendFormat(string format, object arg0, object arg1)
+        internal void AppendFormat(string format, object arg0, object arg1)
         {
             this._sqlBuilder.AppendFormat(format, arg0, arg1);
         }
 
-        public void AppendFormat(string format, object arg0, object arg1, object arg2)
+        internal void AppendFormat(string format, object arg0, object arg1, object arg2)
         {
             this._sqlBuilder.AppendFormat(format, arg0, arg1, arg2);
         }
 
-        public void Remove(int startIndex, int length)
+        internal void Remove(int startIndex, int length)
         {
             this._sqlBuilder.Remove(startIndex, length);
         }
