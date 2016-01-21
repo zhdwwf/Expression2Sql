@@ -60,6 +60,9 @@
     <Compile Include="Expression2SqlProvider.cs" />
     <Compile Include="SqlBuilder.cs" />
     <Compile Include="ExpressionToSql.cs" />
+    <Compile Include="StaticClass\ExpressionToSqlOracle.cs" />
+    <Compile Include="StaticClass\ExpressionToSqlSQLite.cs" />
+    <Compile Include="StaticClass\ExpressionToSqlMySQL.cs" />
     <Compile Include="StaticClass\ExpressionToSqlSQLServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

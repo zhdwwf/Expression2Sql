@@ -15,18 +15,35 @@ namespace Expression2SqlTest
         {
             Console.Title = "Expression2SqlTest";
 
-
             ExpressionToSql<UserInfo> userInfoSql = new ExpressionToSql<UserInfo>(new MySQLSqlParser());
-
             Printf(
                     userInfoSql.Select().Where(u => u.Id != 1),
                     "查询单表，带where条件，实例类"
             );
 
+
             Printf(
-                    ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id),
-                    "查询单表单个字段，静态类"
+               ExpressionToSqlSQLServer.Select<UserInfo>().
+                                        Where(u => u.Name == "张三"),
+               "SQLServer静态类"
             );
+            Printf(
+               ExpressionToSqlMySQL.Select<UserInfo>().
+                                        Where(u => u.Name == "张三"),
+               "MySQL静态类"
+            );
+            Printf(
+               ExpressionToSqlSQLite.Select<UserInfo>().
+                                        Where(u => u.Name == "张三"),
+               "SQLite静态类"
+            );
+            Printf(
+               ExpressionToSqlOracle.Select<UserInfo>().
+                                        Where(u => u.Name == "张三"),
+               "Oracle静态类"
+            );
+
+
 
             Printf(
                     ExpressionToSqlSQLServer.Select<UserInfo>(),
