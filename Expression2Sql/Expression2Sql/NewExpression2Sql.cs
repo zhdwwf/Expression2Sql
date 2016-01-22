@@ -83,6 +83,12 @@ namespace Expression2Sql
             {
                 Expression2SqlProvider.Select(item, sqlBuilder);
             }
+
+            foreach (MemberInfo item in expression.Members)
+            {
+                sqlBuilder.SelectFieldsAlias.Add(item.Name);
+            }
+
             return sqlBuilder;
         }
 

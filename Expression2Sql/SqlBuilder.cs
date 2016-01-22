@@ -35,12 +35,40 @@ namespace Expression2Sql
         internal bool IsSingleTable { get; set; }
 
         internal List<string> SelectFields { get; set; }
+        internal List<string> SelectFieldsAlias { get; set; }
 
         internal string SelectFieldsStr
         {
             get
             {
-                return string.Join(",", this.SelectFields);
+                string selectFieldsStr = null;
+                if (this.SelectFieldsAlias.Count > 0)
+                {
+                    for (int i = 0; i < this.SelectFields.Count; i++)
+                    {
+                        string field = this.SelectFields[i];
+                        string fieldAlias = this.SelectFieldsAlias[i];
+                        if (field.Split('.')[1] == fieldAlias)
+                        {
+                            selectFieldsStr += "," + field;
+                        }
+                        else
+                        {
+                            selectFieldsStr += "," + field + " " + fieldAlias;
+                        }
+                    }
+
+                    if (selectFieldsStr.Length > 0 && selectFieldsStr[0] == ',')
+                    {
+                        selectFieldsStr = selectFieldsStr.Remove(0, 1);
+                    }
+                }
+                else
+                {
+                    selectFieldsStr = string.Join(",", this.SelectFields);
+                }
+
+                return selectFieldsStr;
             }
         }
 
@@ -72,6 +100,7 @@ namespace Expression2Sql
             this.DbParams = new Dictionary<string, object>();
             this._sqlBuilder = new StringBuilder();
             this.SelectFields = new List<string>();
+            this.SelectFieldsAlias = new List<string>();
             this._dbSqlParser = dbSqlParser;
         }
 

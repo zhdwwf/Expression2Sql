@@ -254,7 +254,7 @@ namespace Expression2Sql
             return this;
         }
 
-        public ExpressionToSql<T> Insert(Expression<Func<object>> expression = null)
+        public ExpressionToSql<T> Insert(Expression<Func<object>> expression)
         {
             this._sqlBuilder.Clear();
             this._sqlBuilder.IsSingleTable = true;
@@ -272,8 +272,8 @@ namespace Expression2Sql
             this._sqlBuilder += "delete " + tableName;
             return this;
         }
-        
-        public ExpressionToSql<T> Update(Expression<Func<object>> expression = null)
+
+        public ExpressionToSql<T> Update(Expression<Func<object>> expression)
         {
             this._sqlBuilder.Clear();
             this._sqlBuilder.IsSingleTable = true;

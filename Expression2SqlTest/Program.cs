@@ -1,6 +1,7 @@
 ﻿using Expression2Sql;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Expression2SqlTest
 {
@@ -52,12 +53,17 @@ namespace Expression2SqlTest
 
             Printf(
                 ExpressionToSqlSQLServer.Select<UserInfo>(u => u.Id),
-                "查询单表指定字段"
+                "查询单表单个字段"
             );
 
             Printf(
                 ExpressionToSqlSQLServer.Select<UserInfo>(u => new { u.Id, u.Name }),
-                "查询单表多个字段"
+                "查询单表指定字段"
+            );
+
+            Printf(
+                ExpressionToSqlSQLServer.Select<UserInfo>(u => new { UserId = u.Id, u.Email, UserName = u.Name }),
+                "查询单表指定字段，取字段别名"
             );
 
             Printf(
@@ -168,15 +174,15 @@ namespace Expression2SqlTest
             );
 
             Printf(
-                 ExpressionToSqlSQLServer.Select<UserInfo, Account, Student, Class, City, Country>((u, a, s, d, e, f) =>
-                                          new { u.Id, a.Name, StudentName = s.Name, ClassName = d.Name, e.CityName, CountryName = f.Name }).
+                 ExpressionToSqlSQLServer.Select<UserInfo, Account, Student, Class, City, Country>((a, b, c, d, e, f) =>
+                                          new { a.Id, b.Name, StudentName = c.Name, ClassName = d.Name, e.CityName, CountryName = f.Name }).
                                           Join<Account>((u, a) => u.Id == a.UserId).
                                           LeftJoin<Account, Student>((a, s) => a.Id == s.AccountId).
                                           RightJoin<Student, Class>((s, c) => s.Id == c.UserId).
                                           InnerJoin<Class, City>((c, d) => c.CityId == d.Id).
                                           FullJoin<City, Country>((c, d) => c.CountryId == d.Id).
                                           Where(u => u.Id != null),
-                 "多表复杂关联查询"
+                 "多表复杂关联查询，多表相同列名取别名"
             );
 
             Printf(

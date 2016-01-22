@@ -13,7 +13,7 @@ namespace Expression2Sql
             return new ExpressionToSql<T>(new OracleSqlParser());
         }
 
-        public static ExpressionToSql<T> Insert<T>(Expression<Func<object>> expression = null)
+        public static ExpressionToSql<T> Insert<T>(Expression<Func<object>> expression)
         {
             return CreateExpressionToSql<T>().Insert(expression);
         }
@@ -23,7 +23,7 @@ namespace Expression2Sql
             return CreateExpressionToSql<T>().Delete();
         }
 
-        public static ExpressionToSql<T> Update<T>(Expression<Func<object>> expression = null)
+        public static ExpressionToSql<T> Update<T>(Expression<Func<object>> expression)
         {
             return CreateExpressionToSql<T>().Update(expression);
         }
