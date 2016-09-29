@@ -21,50 +21,93 @@ using System.Reflection;
 
 namespace Expression2Sql
 {
-	class NewExpression2Sql : BaseExpression2Sql<NewExpression>
-	{
-		protected override SqlPack Update(NewExpression expression, SqlPack sqlPack)
-		{
-			for (int i = 0; i < expression.Members.Count; i++)
-			{
-				MemberInfo m = expression.Members[i];
-				ConstantExpression c = expression.Arguments[i] as ConstantExpression;
-				sqlPack += m.Name + " =";
-				sqlPack.AddDbParameter(c.Value);
-				sqlPack += ",";
-			}
-			if (sqlPack[sqlPack.Length - 1] == ',')
-			{
-				sqlPack.Sql.Remove(sqlPack.Length - 1, 1);
-			}
-			return sqlPack;
-		}
+    class NewExpression2Sql : BaseExpression2Sql<NewExpression>
+    {
+        protected override SqlBuilder Where(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            return base.Where(expression, sqlBuilder);
+        }
 
-		protected override SqlPack Select(NewExpression expression, SqlPack sqlPack)
-		{
-			foreach (Expression item in expression.Arguments)
-			{
-				Expression2SqlProvider.Select(item, sqlPack);
-			}
-			return sqlPack;
-		}
+        protected override SqlBuilder Insert(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            string columns = " (";
+            string values = " values (";
 
-		protected override SqlPack GroupBy(NewExpression expression, SqlPack sqlPack)
-		{
-			foreach (Expression item in expression.Arguments)
-			{
-				Expression2SqlProvider.GroupBy(item, sqlPack);
-			}
-			return sqlPack;
-		}
+            for (int i = 0; i < expression.Members.Count; i++)
+            {
+                MemberInfo m = expression.Members[i];
+                columns += m.Name + ",";
 
-		protected override SqlPack OrderBy(NewExpression expression, SqlPack sqlPack)
-		{
-			foreach (Expression item in expression.Arguments)
-			{
-				Expression2SqlProvider.OrderBy(item, sqlPack);
-			}
-			return sqlPack;
-		}
-	}
+                ConstantExpression c = expression.Arguments[i] as ConstantExpression;
+                string dbParamName = sqlBuilder.AddDbParameter(c.Value, false);
+                values += dbParamName + ",";
+            }
+
+            if (columns[columns.Length - 1] == ',')
+            {
+                columns = columns.Remove(columns.Length - 1, 1);
+            }
+            columns += ")";
+
+            if (values[values.Length - 1] == ',')
+            {
+                values = values.Remove(values.Length - 1, 1);
+            }
+            values += ")";
+
+            sqlBuilder += columns + values;
+
+            return sqlBuilder;
+        }
+
+        protected override SqlBuilder Update(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            for (int i = 0; i < expression.Members.Count; i++)
+            {
+                MemberInfo m = expression.Members[i];
+                ConstantExpression c = expression.Arguments[i] as ConstantExpression;
+                sqlBuilder += m.Name + " =";
+                sqlBuilder.AddDbParameter(c.Value);
+                sqlBuilder += ",";
+            }
+            if (sqlBuilder[sqlBuilder.Length - 1] == ',')
+            {
+                sqlBuilder.Remove(sqlBuilder.Length - 1, 1);
+            }
+            return sqlBuilder;
+        }
+
+        protected override SqlBuilder Select(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            foreach (Expression item in expression.Arguments)
+            {
+                Expression2SqlProvider.Select(item, sqlBuilder);
+            }
+
+            foreach (MemberInfo item in expression.Members)
+            {
+                sqlBuilder.SelectFieldsAlias.Add(item.Name);
+            }
+
+            return sqlBuilder;
+        }
+
+        protected override SqlBuilder GroupBy(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            foreach (Expression item in expression.Arguments)
+            {
+                Expression2SqlProvider.GroupBy(item, sqlBuilder);
+            }
+            return sqlBuilder;
+        }
+
+        protected override SqlBuilder OrderBy(NewExpression expression, SqlBuilder sqlBuilder)
+        {
+            foreach (Expression item in expression.Arguments)
+            {
+                Expression2SqlProvider.OrderBy(item, sqlBuilder);
+            }
+            return sqlBuilder;
+        }
+    }
 }
