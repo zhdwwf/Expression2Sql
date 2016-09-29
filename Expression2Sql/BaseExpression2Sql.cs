@@ -18,108 +18,140 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Expression2Sql
 {
-	public abstract class BaseExpression2Sql<T> : IExpression2Sql where T : Expression
-	{
-		protected virtual SqlPack Update(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Update方法");
-		}
-		protected virtual SqlPack Select(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Select方法");
-		}
-		protected virtual SqlPack Join(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Join方法");
-		}
-		protected virtual SqlPack Where(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Where方法");
-		}
-		protected virtual SqlPack In(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.In方法");
-		}
-		protected virtual SqlPack GroupBy(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.GroupBy方法");
-		}
-		protected virtual SqlPack OrderBy(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.OrderBy方法");
-		}
-		protected virtual SqlPack Max(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Max方法");
-		}
-		protected virtual SqlPack Min(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Min方法");
-		}
-		protected virtual SqlPack Avg(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Avg方法");
-		}
-		protected virtual SqlPack Count(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Count方法");
-		}
-		protected virtual SqlPack Sum(T expression, SqlPack sqlPack)
-		{
-			throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Sum方法");
-		}
+    public abstract class BaseExpression2Sql<T> : IExpression2Sql where T : Expression
+    {
+        private void Debug()
+        {
+            if (false)
+            {
+                Console.WriteLine(typeof(T).Name + "." + new StackTrace().GetFrame(1).GetMethod().Name);
+            }
+        }
 
 
-		public SqlPack Update(Expression expression, SqlPack sqlPack)
-		{
-			return Update((T)expression, sqlPack);
-		}
-		public SqlPack Select(Expression expression, SqlPack sqlPack)
-		{
-			return Select((T)expression, sqlPack);
-		}
-		public SqlPack Join(Expression expression, SqlPack sqlPack)
-		{
-			return Join((T)expression, sqlPack);
-		}
-		public SqlPack Where(Expression expression, SqlPack sqlPack)
-		{
-			return Where((T)expression, sqlPack);
-		}
-		public SqlPack In(Expression expression, SqlPack sqlPack)
-		{
-			return In((T)expression, sqlPack);
-		}
-		public SqlPack GroupBy(Expression expression, SqlPack sqlPack)
-		{
-			return GroupBy((T)expression, sqlPack);
-		}
-		public SqlPack OrderBy(Expression expression, SqlPack sqlPack)
-		{
-			return OrderBy((T)expression, sqlPack);
-		}
-		public SqlPack Max(Expression expression, SqlPack sqlPack)
-		{
-			return Max((T)expression, sqlPack);
-		}
-		public SqlPack Min(Expression expression, SqlPack sqlPack)
-		{
-			return Min((T)expression, sqlPack);
-		}
-		public SqlPack Avg(Expression expression, SqlPack sqlPack)
-		{
-			return Avg((T)expression, sqlPack);
-		}
-		public SqlPack Count(Expression expression, SqlPack sqlPack)
-		{
-			return Count((T)expression, sqlPack);
-		}
-		public SqlPack Sum(Expression expression, SqlPack sqlPack)
-		{
-			return Sum((T)expression, sqlPack);
-		}
-	}
+        protected virtual SqlBuilder Insert(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Insert方法");
+        }
+        protected virtual SqlBuilder Update(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Update方法");
+        }
+        protected virtual SqlBuilder Select(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Select方法");
+        }
+        protected virtual SqlBuilder Join(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Join方法");
+        }
+        protected virtual SqlBuilder Where(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Where方法");
+        }
+        protected virtual SqlBuilder In(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.In方法");
+        }
+        protected virtual SqlBuilder GroupBy(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.GroupBy方法");
+        }
+        protected virtual SqlBuilder OrderBy(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.OrderBy方法");
+        }
+        protected virtual SqlBuilder Max(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Max方法");
+        }
+        protected virtual SqlBuilder Min(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Min方法");
+        }
+        protected virtual SqlBuilder Avg(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Avg方法");
+        }
+        protected virtual SqlBuilder Count(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Count方法");
+        }
+        protected virtual SqlBuilder Sum(T expression, SqlBuilder sqlBuilder)
+        {
+            throw new NotImplementedException("未实现" + typeof(T).Name + "2Sql.Sum方法");
+        }
+
+
+        public SqlBuilder Insert(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Insert((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Update(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Update((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Select(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Select((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Join(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Join((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Where(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Where((T)expression, sqlBuilder);
+        }
+        public SqlBuilder In(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return In((T)expression, sqlBuilder);
+        }
+        public SqlBuilder GroupBy(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return GroupBy((T)expression, sqlBuilder);
+        }
+        public SqlBuilder OrderBy(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return OrderBy((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Max(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Max((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Min(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Min((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Avg(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Avg((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Count(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Count((T)expression, sqlBuilder);
+        }
+        public SqlBuilder Sum(Expression expression, SqlBuilder sqlBuilder)
+        {
+            Debug();
+            return Sum((T)expression, sqlBuilder);
+        }
+    }
 }

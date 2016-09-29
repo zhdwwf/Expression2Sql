@@ -41,9 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseExpression2Sql.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="DbSqlParser\MySQLSqlParser.cs" />
+    <Compile Include="DbSqlParser\OracleSqlParser.cs" />
+    <Compile Include="DbSqlParser\SQLiteSqlParser.cs" />
+    <Compile Include="DbSqlParser\SQLServerSqlParser.cs" />
     <Compile Include="Expression2SqlEx.cs" />
-    <Compile Include="Expre2Sql.cs" />
+    <Compile Include="Expression2Sql\ParameterExpression2Sql.cs" />
     <Compile Include="Expression2Sql\BinaryExpression2Sql.cs" />
     <Compile Include="Expression2Sql\ConstantExpression2Sql.cs" />
     <Compile Include="Expression2Sql\MemberExpression2Sql.cs" />
@@ -51,11 +54,16 @@
     <Compile Include="Expression2Sql\NewArrayExpression2Sql.cs" />
     <Compile Include="Expression2Sql\NewExpression2Sql.cs" />
     <Compile Include="Expression2Sql\UnaryExpression2Sql.cs" />
+    <Compile Include="IDbSqlParser.cs" />
     <Compile Include="IExpression2Sql.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Expression2SqlProvider.cs" />
-    <Compile Include="SqlPack.cs" />
-    <Compile Include="Expression2SqlCore.cs" />
+    <Compile Include="SqlBuilder.cs" />
+    <Compile Include="ExpressionToSql.cs" />
+    <Compile Include="StaticClass\ExpressionToSqlOracle.cs" />
+    <Compile Include="StaticClass\ExpressionToSqlSQLite.cs" />
+    <Compile Include="StaticClass\ExpressionToSqlMySQL.cs" />
+    <Compile Include="StaticClass\ExpressionToSqlSQLServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -16,13 +16,17 @@
  */
 #endregion
 
+
 namespace Expression2Sql
 {
-	public enum DatabaseType
-	{
-		SQLServer,
-		MySQL,
-		Oracle,
-		SQLite,
-	}
+    public class OracleSqlParser : IDbSqlParser
+    {
+        public string DbParamPrefix
+        {
+            get
+            {
+                return ":";
+            }
+        }
+    }
 }
